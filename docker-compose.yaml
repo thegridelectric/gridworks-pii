@@ -1,0 +1,19 @@
+# A development store: Postgres on loopback 5441, credentials for dev only.
+#   docker compose up -d
+#   GWPII_DB_URL=postgresql+psycopg://pii:piipass@localhost:5441/pii uv run alembic upgrade head
+#   uv run python scripts/seed_dev.py --db-url postgresql+psycopg://pii:piipass@localhost:5441/pii
+services:
+  pii-postgres:
+    image: postgres:16
+    container_name: pii-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: pii
+      POSTGRES_PASSWORD: piipass
+      POSTGRES_DB: pii
+    ports:
+      - "127.0.0.1:5441:5432"
+    volumes:
+      - pii-pgdata:/var/lib/postgresql/data
+volumes:
+  pii-pgdata:

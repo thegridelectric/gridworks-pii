@@ -28,8 +28,8 @@ class CustomerRecord(BaseModel):
     ta_g_node_id: str
     first_name: str
     last_name: str
-    email: EmailStr
-    phone: str
+    email: EmailStr | None = None
+    phone: str | None = None
     street: str
     city: str
     state: str
@@ -56,9 +56,9 @@ class InstallerRecord(BaseModel):
 
     id: str
     name: str
-    contact_name: str
-    email: EmailStr
-    phone: str
+    contact_name: str | None = None
+    email: EmailStr | None = None
+    phone: str | None = None
 
     @field_validator("id")
     @classmethod

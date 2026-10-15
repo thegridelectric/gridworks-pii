@@ -46,6 +46,29 @@ store's box; the database is bound to loopback there.
 Every write appends a row to `pii.changes` (who, when, table, key,
 before, after). A deletion is a real delete plus that row.
 
+## Development store
+
+`docker compose up -d` runs a Postgres on `localhost:5441` (user `pii`,
+password `piipass`, database `pii`). Migrate it and fill it with bogus
+households:
+
+```
+GWPII_DB_URL=postgresql+psycopg://pii:piipass@localhost:5441/pii uv run alembic upgrade head
+uv run python scripts/seed_dev.py --db-url postgresql+psycopg://pii:piipass@localhost:5441/pii --count 12
+```
+
+The dev seed is deterministic and idempotent, and takes its URL on the
+command line so it can never read the operator `.env`. Point the CLI at
+the dev store with the same `GWPII_DB_URL` (and any `GWPII_OPERATOR`).
+
+## The seed from journaldb
+
+`scripts/seed_from_journaldb.py` moved the six original households out
+of the analytics database, once. It maps each installation's
+LeafTransactiveNode GNodeId to the TerminalAsset GNodeId, drops the
+coordinates, writes customers and the installer with change records
+naming the seed, mints their labels, and runs a row-level check.
+
 ## Checks
 
 `./ci.sh` runs lint, format check, pyright and the tests.

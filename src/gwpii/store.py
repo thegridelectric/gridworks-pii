@@ -180,3 +180,15 @@ def get_labels(session: Session, ta_g_node_id: str) -> list[PartnerLabelRecord]:
         select(PartnerLabelSql).where(PartnerLabelSql.ta_g_node_id == ta_g_node_id)
     ).scalars()
     return [PartnerLabelRecord.model_validate(r, from_attributes=True) for r in rows]
+
+
+def all_customer_ids(session: Session) -> list[str]:
+    return list(
+        session.execute(
+            select(CustomerSql.ta_g_node_id).order_by(CustomerSql.ta_g_node_id)
+        ).scalars()
+    )
+
+
+def all_change_afters(session: Session) -> list[dict | None]:
+    return list(session.execute(select(ChangeSql.after)).scalars())

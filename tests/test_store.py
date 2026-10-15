@@ -51,6 +51,13 @@ def test_customer_round_trips_with_label_and_change_records(session):
     assert "latitude" not in changes[1].after and "longitude" not in changes[1].after
 
 
+def test_customer_without_email_round_trips(session):
+    store.add_scheme(session, WHO, "ridgeline", "HH-", 3)
+    rec = customer().model_copy(update={"email": None})
+    store.add_customer(session, WHO, rec, "ridgeline")
+    assert store.get_customer(session, BEECH).email is None
+
+
 def test_second_add_customer_for_same_ta_is_refused(session):
     store.add_scheme(session, WHO, "ridgeline", "HH-", 3)
     store.add_customer(session, WHO, customer(), "ridgeline")

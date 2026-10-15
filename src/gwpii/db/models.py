@@ -39,8 +39,8 @@ class CustomerSql(Base):
     ta_g_node_id: Mapped[str] = mapped_column(String(36), primary_key=True)
     first_name: Mapped[str] = mapped_column(String)
     last_name: Mapped[str] = mapped_column(String)
-    email: Mapped[str] = mapped_column(String)
-    phone: Mapped[str] = mapped_column(String)
+    email: Mapped[str | None] = mapped_column(String, nullable=True)
+    phone: Mapped[str | None] = mapped_column(String, nullable=True)
     street: Mapped[str] = mapped_column(String)
     city: Mapped[str] = mapped_column(String)
     state: Mapped[str] = mapped_column(String)
@@ -67,9 +67,9 @@ class InstallerSql(Base):
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True)
     name: Mapped[str] = mapped_column(String)
-    contact_name: Mapped[str] = mapped_column(String)
-    email: Mapped[str] = mapped_column(String)
-    phone: Mapped[str] = mapped_column(String)
+    contact_name: Mapped[str | None] = mapped_column(String, nullable=True)
+    email: Mapped[str | None] = mapped_column(String, nullable=True)
+    phone: Mapped[str | None] = mapped_column(String, nullable=True)
     created: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )

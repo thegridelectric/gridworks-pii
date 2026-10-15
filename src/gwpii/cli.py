@@ -21,8 +21,8 @@ from gwpii.settings import load_settings
 CUSTOMER_PROMPTS: list[tuple[str, str, bool]] = [
     ("first_name", "First name", True),
     ("last_name", "Last name", True),
-    ("email", "Email", True),
-    ("phone", "Phone", True),
+    ("email", "Email (blank for none)", False),
+    ("phone", "Phone (blank for none)", False),
     ("street", "Street", True),
     ("city", "City", True),
     ("state", "State", True),
